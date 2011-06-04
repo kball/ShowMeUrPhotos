@@ -16,26 +16,46 @@ App.TwitterSearch = (function() {
   };
 
   var search = function(term) {
-    $('#tweeters').html('');
     $.ajax({dataType: "jsonp", url: 'http://search.twitter.com/search.json?q=%23' + term,
             success: showTweets });
   };
 
   var showTweets = function(data) {
-    $.each(data.results, function(i, tweetData) {
-      if(!users[tweetData.from_user]) {
-        users[tweetData.from_user] = new App.Models.User(tweetData.from_user,
-          tweetData.from_user_id, tweetData.profile_image_url);
-      }
-      var user = users[tweetData.from_user];
-      user.addTweet(tweetData);
-      //referencedUserNames = getReferences(tweet.text);
+    updateUsers(data);
+    $('#tweeters').html('');
+    $.each(sortedUsers(), function(i, user) {
       var tweeterId = '#tweeter_' + user.id;
       if(!$(tweeterId)[0]) {
         $('#tweeters').append("<li class='tweeter clearfix' id='tweeter_" + user.id + "'></li>");
       }
       $(tweeterId).html(tweeterTemplate(user));
     });
+  };
+
+  var updateUsers = function(data) {
+    $.each(data.results, function(i, tweetData) {
+
+      if(!users[tweetData.from_user]) {
+        users[tweetData.from_user] = new App.Models.User(tweetData.from_user,
+          tweetData.from_user_id, tweetData.profile_image_url);
+      }
+      var user = users[tweetData.from_user];
+      user.addTweet(tweetData);
+      referencedUserNames = getReferences(tweetData.text);
+    });
+  };
+
+  var sortedUsers = function() {
+  };
+
+  var referencedUserNames = function(text) {
+    var userNames = []; // Fill me out with an array
+    return userNames;
+  };
+
+  var links = function(text) {
+    var links = []; // Fill me out with an array
+    return links;
   };
 
 
