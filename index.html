@@ -5,6 +5,7 @@
   <script src="http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a4.1.min.js"></script>
   <script type="text/javascript" charset="utf-8" src="handlebars.1.0.0.beta.3.js"></script>
   <script type="text/javascript" charset="utf-8" src="user.js"></script>
+  <link rel="stylesheet" href="application.css" />
   <script type="text/javascript" charset="utf-8" src="application.js"></script>
   <body>
     <div data-role="page">
@@ -23,10 +24,11 @@
 
     <script id='tweeter-template' type="text/x-handlebars-template">
       <img class='profile_photo' src='{{photo}}'></img>
-      {{name}}
-      <div class='stats'>
+      <div class='info'>
+        {{name}}<br/>
         Tweets: {{tweetCount}}<br/>
         References: {{referenceCount}}<br/>
+      </div>
     </script>
 
   </body>

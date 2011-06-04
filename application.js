@@ -32,7 +32,7 @@ App.TwitterSearch = (function() {
       //referencedUserNames = getReferences(tweet.text);
       var tweeterId = '#tweeter_' + user.id;
       if(!$(tweeterId)[0]) {
-        $('#tweeters').append("<li class='tweeter' id='tweeter_" + user.id + "'></li>");
+        $('#tweeters').append("<li class='tweeter clearfix' id='tweeter_" + user.id + "'></li>");
       }
       $(tweeterId).html(tweeterTemplate(user));
     });
