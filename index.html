@@ -3,17 +3,31 @@
   <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a4.1.min.css" />
   <script src="http://code.jquery.com/jquery-1.5.2.min.js"></script>
   <script src="http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a4.1.min.js"></script>
+  <script type="text/javascript" charset="utf-8" src="handlebars.1.0.0.beta.3.js"></script>
+  <script type="text/javascript" charset="utf-8" src="user.js"></script>
   <script type="text/javascript" charset="utf-8" src="application.js"></script>
   <body>
     <div data-role="page">
       <div data-role="header">
         <div data-role="fieldcontain">
-        <label for="hashtag">Hashtag:</label>
-        <input type="text" name="hashtag" id="hashtag" value="" />
+          <label for="hashtag">Hashtag:</label>
+          <input type="text" name="hashtag" id="hashtag" value="" />
+          <button id='hashtag_button'>Update</button>
+        </div>
       </div>
       <div data-role="content">
-
+        <ul id='tweeters'>
+        </ul>
       </div>
     </div>
+
+    <script id='tweeter-template' type="text/x-handlebars-template">
+      <img class='profile_photo' src='{{photo}}'></img>
+      {{name}}
+      <div class='stats'>
+        Tweets: {{tweetCount}}<br/>
+        References: {{referenceCount}}<br/>
+    </script>
+
   </body>
 </html>
