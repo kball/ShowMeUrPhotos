@@ -46,7 +46,10 @@ App.TwitterSearch = (function() {
   };
 
   var sortedUsers = function() {
-    return users;
+    var results = _.sortBy(users, function(user) {
+      return user.tweetCount + user.referenceCount;
+    }).reverse();
+    return results;
   };
 
   var getReferences = function(text) {
@@ -60,7 +63,7 @@ App.TwitterSearch = (function() {
   };
 
 
-  return {setup: setup, users: users, search: search, showTweets: showTweets, };
+  return {setup: setup, users: users, search: search, showTweets: showTweets, sortedUsers : sortedUsers };
 })();
 
 $(document).ready(App.TwitterSearch.setup);
