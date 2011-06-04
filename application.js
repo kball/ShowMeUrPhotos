@@ -41,7 +41,7 @@ App.TwitterSearch = (function() {
       }
       var user = users[tweetData.from_user];
       user.addTweet(tweetData);
-      referencedUserNames = referencedUserNames(tweetData.text);
+      var referencedUserNames = getReferences(tweetData.text);
     });
   };
 
@@ -49,12 +49,12 @@ App.TwitterSearch = (function() {
     return users;
   };
 
-  var referencedUserNames = function(text) {
+  var getReferences = function(text) {
     var userNames = []; // Fill me out with an array
     return userNames;
   };
 
-  var links = function(text) {
+  var getLinks = function(text) {
     var links = []; // Fill me out with an array
     return links;
   };
