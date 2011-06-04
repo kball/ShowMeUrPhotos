@@ -41,11 +41,12 @@ App.TwitterSearch = (function() {
       }
       var user = users[tweetData.from_user];
       user.addTweet(tweetData);
-      referencedUserNames = getReferences(tweetData.text);
+      referencedUserNames = referencedUserNames(tweetData.text);
     });
   };
 
   var sortedUsers = function() {
+    return users;
   };
 
   var referencedUserNames = function(text) {
@@ -59,7 +60,7 @@ App.TwitterSearch = (function() {
   };
 
 
-  return {setup: setup, users: users, search: search, showTweets: showTweets};
+  return {setup: setup, users: users, search: search, showTweets: showTweets, };
 })();
 
 $(document).ready(App.TwitterSearch.setup);
