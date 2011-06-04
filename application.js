@@ -5,7 +5,6 @@ if (typeof (App) === 'undefined') {App = {};}
 App.TwitterSearch = (function() {
 
   var tweeterTemplate;
-  var tweetTemplate;
   var users = {};
 
   var setup = function() {
@@ -21,7 +20,7 @@ App.TwitterSearch = (function() {
     $.ajax({dataType: "jsonp", url: 'http://search.twitter.com/search.json?q=%23' + term,
             success: showTweets });
   };
-    
+
   var showTweets = function(data) {
     $.each(data.results, function(i, tweetData) {
       if(!users[tweetData.from_user]) {
@@ -40,7 +39,7 @@ App.TwitterSearch = (function() {
   };
 
 
-  return {setup: setup};
+  return {setup: setup, users: users, search: search, showTweets: showTweets};
 })();
 
 $(document).ready(App.TwitterSearch.setup);
