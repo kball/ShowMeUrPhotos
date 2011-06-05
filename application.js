@@ -24,24 +24,37 @@ App.TwitterSearch = (function() {
     updateUsers(data);
     $('#tweeters').html('');
     $.each(sortedUsers(), function(i, user) {
-      var tweeterId = '#tweeter_' + user.id;
-      if(!$(tweeterId)[0]) {
-        $('#tweeters').append("<li class='tweeter clearfix' id='tweeter_" + user.id + "'></li>");
+      if (user.id) {
+        var tweeterId = '#tweeter_' + user.id;
+        if(!$(tweeterId)[0]) {
+          $('#tweeters').append("<li class='tweeter clearfix' id='tweeter_" + user.id + "'></li>");
+        }
+        $(tweeterId).html(tweeterTemplate(user));
       }
-      $(tweeterId).html(tweeterTemplate(user));
     });
+  };
+
+  var getUser = function(name, id, photo) {
+    if(!users[name]) {
+      users[name] = new App.Models.User(name, id, photo);
+    }
+    // references we only get names; if we later get id & photo we want to add it
+    if (id) {users[name].id = id};
+    if (photo) {users[name].photo = photo};
+
+    return users[name];
   };
 
   var updateUsers = function(data) {
     $.each(data.results, function(i, tweetData) {
+      var user = getUser(tweetData.from_user, tweetData.from_user_id, tweetData.profile_image_url);
 
-      if(!users[tweetData.from_user]) {
-        users[tweetData.from_user] = new App.Models.User(tweetData.from_user,
-          tweetData.from_user_id, tweetData.profile_image_url);
-      }
-      var user = users[tweetData.from_user];
       user.addTweet(tweetData);
       var referencedUserNames = getReferences(tweetData.text);
+      for(var i in referencedUserNames) {
+        var ref = getUser(referencedUserNames[i]);
+        ref.addReference(tweetData);
+      }
     });
   };
 
@@ -53,7 +66,12 @@ App.TwitterSearch = (function() {
   };
 
   var getReferences = function(text) {
-    var userNames = []; // Fill me out with an array
+    var pattUsers = /@(\S*)/gi;
+    var userNames = text.match(pattUsers);
+    for(var i in userNames) {
+      userNames[i] = userNames[i].replace('@','');
+      userNames[i] = userNames[i].replace(':','');
+    }
     return userNames;
   };
 
