@@ -11,7 +11,7 @@ App.Models.User = function(name, id, photo) {
   this.references = {};
   this.referenceCount = 0;
   this.links = [];
-
+  this.linkCount = 0;
 };
 
 App.Models.User.prototype.addTweet = function(tweet) {
@@ -26,4 +26,9 @@ App.Models.User.prototype.addReference = function(tweet) {
     this.references[tweet.id] = tweet;
     this.referenceCount = this.referenceCount + 1;
   }
+};
+
+App.Models.User.prototype.addLink = function(link) {
+  this.links.push(link);
+  this.linkCount = this.linkCount + 1;
 };

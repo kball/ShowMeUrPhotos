@@ -16,6 +16,7 @@ App.TwitterSearch = (function() {
   };
 
   var search = function(term) {
+    users = {};
     $.ajax({dataType: "jsonp", url: 'http://search.twitter.com/search.json?q=%23' + term,
             success: showTweets });
   };
@@ -50,6 +51,10 @@ App.TwitterSearch = (function() {
       var user = getUser(tweetData.from_user, tweetData.from_user_id, tweetData.profile_image_url);
 
       user.addTweet(tweetData);
+      var links = getLinks(tweetData.text);
+      for (var i in links) {
+        user.addLink(links[i]);
+      }
       var referencedUserNames = getReferences(tweetData.text);
       for(var i in referencedUserNames) {
         var ref = getUser(referencedUserNames[i]);
@@ -60,7 +65,7 @@ App.TwitterSearch = (function() {
 
   var sortedUsers = function() {
     var results = _.sortBy(users, function(user) {
-      return user.tweetCount + user.referenceCount;
+      return user.tweetCount + user.referenceCount + user.linkCount;
     }).reverse();
     return results;
   };
@@ -76,9 +81,10 @@ App.TwitterSearch = (function() {
   };
 
   var getLinks = function(text) {
-    var links = []; // Fill me out with an array
-    return links;
-  };
+   var pattLinks = /(http|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?/gi;
+   var links = text.match(pattLinks);
+   return links;
+ };
 
 
   return {setup: setup, users: users, search: search, showTweets: showTweets, sortedUsers : sortedUsers };
