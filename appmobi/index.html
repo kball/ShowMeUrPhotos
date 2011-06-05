@@ -1,0 +1,84 @@
+<!DOCTYPE html><!--HTML5 doctype-->
+<html>
+<head>
+  <title>HashActive</title>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8"> 
+<style type="text/css">
+    /* Prevent copy paste for all elements except text fields */
+    *  { -webkit-user-select:none; -webkit-tap-highlight-color:rgba(255, 255, 255, 0); }
+    input, textarea  { -webkit-user-select:text; }
+    
+    /* Set up the page with a default background image */
+    body {
+        background-color:#fff;
+        color:#000;
+        font-family:Arial;
+        font-size:48pt;
+        margin:0px;padding:0px;
+        background-image:url('images/background.jpg');
+    }
+</style>
+<script type="text/javascript" charset="utf-8" src="http://localhost:58888/_appMobi/appmobi.js"></script> 
+<script type="text/javascript" charset="utf-8" src="http://localhost:58888/_appMobi/xhr.js"></script> 
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a4.1.min.css" />
+  <script src="http://code.jquery.com/jquery-1.5.2.min.js"></script>
+  <script src="appmobi.toolkit.all.min.js"></script>
+  <script type="text/javascript" charset="utf-8" src="handlebars.1.0.0.beta.3.js"></script>
+  <script type="text/javascript" charset="utf-8" src="underscore.js"></script>
+  <script type="text/javascript" charset="utf-8" src="user.js"></script>
+  <link rel="stylesheet" href="application.css" />
+  <script type="text/javascript" charset="utf-8" src="application.js"></script>
+<script type="text/javascript">
+/* This function runs once the page is loaded, but appMobi is not yet active */
+var init = function(){
+
+};
+window.addEventListener("load",init,false);  
+
+/* This code prevents users from dragging the page */
+var preventDefaultScroll = function(event) {
+    event.preventDefault();
+    window.scroll(0,0);
+    return false;
+};
+document.addEventListener('touchmove', preventDefaultScroll, false);
+
+/* This code is used to run as soon as appMobi activates */
+var onDeviceReady=function(){
+    //Size the display to 768px by 1024px
+  AppMobi.display.useViewport(768,1024);
+	
+	//hide splash screen
+	AppMobi.device.hideSplashScreen();	
+};
+document.addEventListener("appMobi.device.ready",onDeviceReady,false);    
+</script>
+
+</head>
+<body>
+    <div data-role="page">
+      <div data-role="header">
+        <div data-role="fieldcontain">
+          <label for="hashtag">Hashtag:</label>
+          <input type="text" name="hashtag" id="hashtag" value="" />
+          <button id='hashtag_button'>Update</button>
+        </div>
+      </div>
+      <div id='viewport' data-role="content" style="width:100%;height:300px">
+        <ul id='tweeters' data-role="listview">
+        </ul>
+      </div>
+    </div>
+
+    <script id='tweeter-template' type="text/x-handlebars-template">
+      <img class='profile_photo' src='{{photo}}'></img>
+      <div class='info'>
+        {{name}}<br/>
+        Tweets: {{tweetCount}}<br/>
+        References: {{referenceCount}}<br/>
+      </div>
+    </script>
+
+  </body>
+</body>
+</html>
